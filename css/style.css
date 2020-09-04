@@ -1,1 +1,49 @@
-/* No CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  font-size: 62.5%;
+  background-color: #f4f4f4;
+}
+
+.wrapper {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  place-items: center;
+}
+
+.wrapper .board {
+  background-color: gray;
+  width: 80vmin;
+  height: 80vmin;
+  padding: 1rem;
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+  border-radius: 1rem;
+}
+
+.wrapper .board .tile {
+  background-color: #f4f4f4;
+  min-width: 5rem;
+  min-height: 5rem;
+  display: grid;
+  place-items: center;
+  border-radius: 1rem;
+}
+
+.wrapper .board .tile .fa-circle {
+  font-size: 5rem;
+  color: #8f3636;
+}
+
+.wrapper .board .tile .fa-times {
+  font-size: 5rem;
+  color: #2e2e86;
+}
