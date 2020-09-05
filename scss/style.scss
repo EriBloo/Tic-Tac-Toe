@@ -10,22 +10,44 @@ body {
 	background-color: #f4f4f4;
 }
 
+.nav {
+	background-color: rgb(180, 180, 180);
+	height: 10vh;
+	width: 100vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-bottom: solid 0.5vh rgb(46, 46, 134);
+
+	.fa-toggle-off {
+		font-size: 5vh;
+		color: rgb(143, 54, 54);
+		cursor: pointer;
+	}
+
+	.fa-toggle-on {
+		font-size: 5vh;
+		color: rgb(46, 46, 134);
+		cursor: pointer;
+	}
+}
+
 .wrapper {
-	height: 100vh;
+	height: 90vh;
 	width: 100vw;
 	display: grid;
 	place-items: center;
 
 	.board {
-		background-color: gray;
+		background-color: rgb(148, 148, 148);
 		width: 80vmin;
 		height: 80vmin;
-		padding: 1rem;
+		padding: 2vmin;
 		display: grid;
 		grid-template-rows: repeat(3, 1fr);
 		grid-template-columns: repeat(3, 1fr);
-		grid-gap: 1rem;
-		border-radius: 1rem;
+		grid-gap: 2vmin;
+		border-radius: 3%;
 
 		.tile {
 			background-color: #f4f4f4;
@@ -33,7 +55,7 @@ body {
 			min-height: 10vmin;
 			display: grid;
 			place-items: center;
-			border-radius: 1rem;
+			border-radius: 3%;
 			cursor: pointer;
 			transition: background-color 1s ease;
 
