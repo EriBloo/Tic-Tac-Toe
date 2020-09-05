@@ -14,6 +14,7 @@ const gameBoard = (function() {
 	const _board = [...new Array(9)];
 	const _players = [player("x"), player("o")];
 	let _currentTurn = 0;
+	let _winner;
 
 	return {
 		getTile(tile) {
@@ -28,6 +29,12 @@ const gameBoard = (function() {
 		},
 		getCurrentPlayer() {
 			return _players[_currentTurn];
+		},
+		getWinner() {
+			return _winner;
+		},
+		setWinner() {
+			_winner = _players[_currentTurn];
 		}
 	}
 })();
@@ -36,13 +43,13 @@ const setEvents = (function() {
 	const _tiles = document.querySelectorAll(".tile");
 	_tiles.forEach(function(tile) {
 		tile.addEventListener("click", drawMove);
-	})
+	});
 })();
 
 function drawMove(e) {
 	const tile = e.target;
-	console.log(tile.getAttribute("data"))
-	if (!gameBoard.getTile(tile.getAttribute("data"))) {
+
+	if (!gameBoard.getTile(tile.getAttribute("data")) && !gameBoard.getWinner()) {
 		const icon = document.createElement("i");
 
 		if (gameBoard.getCurrentPlayer().getValue() === "x") {
@@ -56,6 +63,39 @@ function drawMove(e) {
 
 		tile.appendChild(icon);
 		gameBoard.setTile(tile.getAttribute("data"), gameBoard.getCurrentPlayer().getValue());
+		
+		const win = checkForWin();
+		if (win) {
+			markWinningTiles(win);
+		}
+
 		gameBoard.nextTurn();
 	}
+}
+
+function markWinningTiles(tileNumber) {
+	const tiles = tileNumber.map(function(t) {return document.querySelector(`.tile[data="${t}"]`)})
+
+	tiles.forEach(function(tile) {
+		tile.classList.add("win");
+		tile.addEventListener("transitionend", removeMark)});
+}
+
+function removeMark(e) {
+	if (e.propertyName !== "background-color") return;
+	e.target.classList.remove("win");
+}
+
+function checkForWin() {
+	const possibleWins = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 4, 8], [2, 4, 6], [0, 3, 6], [1, 4, 7], [2, 5, 8]];
+
+	for (let possible of possibleWins) {
+		const values = possible.map(function(p) {return gameBoard.getTile(p)});
+		
+		if (values.every(function(v) {return v}) && (values[0] === values[1] && values[0] === values[2])) {
+			gameBoard.setWinner();
+			return possible;
+		}
+	}
+	return false;
 }

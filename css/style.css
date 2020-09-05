@@ -37,6 +37,7 @@ body {
   place-items: center;
   border-radius: 1rem;
   cursor: pointer;
+  transition: background-color 1s ease;
 }
 
 .wrapper .board .tile .fa-circle {
@@ -49,4 +50,8 @@ body {
   font-size: 10vmin;
   color: #2e2e86;
   pointer-events: none;
+}
+
+.wrapper .board .win {
+  background-color: #ecec4b;
 }
