@@ -29,20 +29,23 @@ body {
 
 		.tile {
 			background-color: #f4f4f4;
-			min-width: 5rem;
-			min-height: 5rem;
+			min-width: 10vmin;
+			min-height: 10vmin;
 			display: grid;
 			place-items: center;
 			border-radius: 1rem;
+			cursor: pointer;
 
 			.fa-circle {
-				font-size: 5rem;
+				font-size: 10vmin;
 				color: rgb(143, 54, 54);
+				pointer-events: none;
 			}
 
 			.fa-times {
-				font-size: 5rem;
+				font-size: 10vmin;
 				color: rgb(46, 46, 134);
+				pointer-events: none;
 			}
 		}
 	}

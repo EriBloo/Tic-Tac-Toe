@@ -31,19 +31,22 @@ body {
 
 .wrapper .board .tile {
   background-color: #f4f4f4;
-  min-width: 5rem;
-  min-height: 5rem;
+  min-width: 10vmin;
+  min-height: 10vmin;
   display: grid;
   place-items: center;
   border-radius: 1rem;
+  cursor: pointer;
 }
 
 .wrapper .board .tile .fa-circle {
-  font-size: 5rem;
+  font-size: 10vmin;
   color: #8f3636;
+  pointer-events: none;
 }
 
 .wrapper .board .tile .fa-times {
-  font-size: 5rem;
+  font-size: 10vmin;
   color: #2e2e86;
+  pointer-events: none;
 }
