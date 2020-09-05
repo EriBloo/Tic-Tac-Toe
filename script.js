@@ -11,10 +11,10 @@ const player = function(value) {
 }
 
 const gameBoard = (function() {
-	const _board = [...new Array(9)];
+	let _board = [...new Array(9)];
 	const _players = [player("x"), player("o")];
 	let _currentTurn = 0;
-	let _winner;
+	let _winner = null;
 
 	return {
 		getTile(tile) {
@@ -33,8 +33,24 @@ const gameBoard = (function() {
 		getWinner() {
 			return _winner;
 		},
-		setWinner() {
-			_winner = _players[_currentTurn];
+		setWinner(player = _players[_currentTurn]) {
+			_winner = player;
+		},
+		resetBoard() {
+			_board = [...new Array(9)];
+			_currentTurn = 0;
+			_winner = null;
+			clearBoard();
+		}
+	}
+})();
+
+const scoreBoard = (function() {
+	const _score = {"x": 0, "o": 0, "tie": 0}
+
+	return {
+		addScore(winner) {
+			_score[winner] += 1;
 		}
 	}
 })();
@@ -67,6 +83,13 @@ function drawMove(e) {
 		const win = checkForWin();
 		if (win) {
 			markWinningTiles(win);
+			if (gameBoard.getWinner()) {
+				scoreBoard.addScore((gameBoard.getWinner().getValue()));
+			}
+			else {
+				scoreBoard.addScore((gameBoard.getWinner()))
+			}
+			setTimeout(gameBoard.resetBoard, 3000);
 		}
 
 		gameBoard.nextTurn();
@@ -97,5 +120,20 @@ function checkForWin() {
 			return possible;
 		}
 	}
+	if ([0, 1, 2, 3, 4, 5, 6, 7, 8]
+		.map(function(t) {return gameBoard.getTile(t)})
+		.every(function(t) {return t})) {
+			return [0, 1, 2, 3, 4, 5, 6, 7, 8]
+		}
 	return false;
+}
+
+function clearBoard() {
+	const tiles = document.querySelectorAll(".tile");
+
+	tiles.forEach(function(tile) {
+		if (tile.firstChild) {
+			tile.removeChild(tile.firstChild);
+		}
+	});
 }
