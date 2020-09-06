@@ -14,21 +14,57 @@ body {
 	background-color: rgb(180, 180, 180);
 	height: 10vh;
 	width: 100vw;
-	display: flex;
-	justify-content: center;
+	display: grid;
+	grid-template-columns: 20vw 1fr 20vw;
+	justify-content: space-around;
 	align-items: center;
 	border-bottom: solid 0.5vh rgb(46, 46, 134);
 
-	.fa-toggle-off {
-		font-size: 5vh;
-		color: rgb(143, 54, 54);
-		cursor: pointer;
+	.scoreboard {
+		grid-column: 2/3;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		h2 {
+			font-size: 4vmin;
+			margin: 0 2rem 0 2rem;
+			color: #333333;
+		}
+
+		.fa-circle {
+			font-size: 4vmin;
+			color: rgb(143, 54, 54);
+		}
+
+		.fa-times {
+			font-size: 5vmin;
+			color: rgb(46, 46, 134);
+		}
 	}
 
-	.fa-toggle-on {
-		font-size: 5vh;
-		color: rgb(46, 46, 134);
-		cursor: pointer;
+	.computer-toggle {
+		grid-column: 3/4;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		h3 {
+			text-align: center;
+			font-size: 3vmin;
+		}
+
+		.fa-toggle-off {
+			font-size: 5vmin;
+			color: rgb(143, 54, 54);
+			cursor: pointer;
+		}
+	
+		.fa-toggle-on {
+			font-size: 5vmin;
+			color: rgb(46, 46, 134);
+			cursor: pointer;
+		}
 	}
 }
 
@@ -60,7 +96,7 @@ body {
 			transition: background-color 1s ease;
 
 			.fa-circle {
-				font-size: 10vmin;
+				font-size: 8vmin;
 				color: rgb(143, 54, 54);
 				pointer-events: none;
 			}

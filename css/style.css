@@ -14,20 +14,56 @@ body {
   background-color: #b4b4b4;
   height: 10vh;
   width: 100vw;
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 20vw 1fr 20vw;
+  justify-content: space-around;
   align-items: center;
   border-bottom: solid 0.5vh #2e2e86;
 }
 
-.nav .fa-toggle-off {
-  font-size: 5vh;
+.nav .scoreboard {
+  grid-column: 2/3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav .scoreboard h2 {
+  font-size: 4vmin;
+  margin: 0 2rem 0 2rem;
+  color: #333333;
+}
+
+.nav .scoreboard .fa-circle {
+  font-size: 4vmin;
+  color: #8f3636;
+}
+
+.nav .scoreboard .fa-times {
+  font-size: 5vmin;
+  color: #2e2e86;
+}
+
+.nav .computer-toggle {
+  grid-column: 3/4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nav .computer-toggle h3 {
+  text-align: center;
+  font-size: 3vmin;
+}
+
+.nav .computer-toggle .fa-toggle-off {
+  font-size: 5vmin;
   color: #8f3636;
   cursor: pointer;
 }
 
-.nav .fa-toggle-on {
-  font-size: 5vh;
+.nav .computer-toggle .fa-toggle-on {
+  font-size: 5vmin;
   color: #2e2e86;
   cursor: pointer;
 }
@@ -63,7 +99,7 @@ body {
 }
 
 .wrapper .board .tile .fa-circle {
-  font-size: 10vmin;
+  font-size: 8vmin;
   color: #8f3636;
   pointer-events: none;
 }
