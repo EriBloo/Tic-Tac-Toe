@@ -1,139 +1,77 @@
-const player = function(value) {
-	let _computer = false;
-
-	const setComputer = () => {
-		_computer = !_computer;
-	}
+const Player = function(symbol) {
+	const _computer = false;
+	const _name = `Player ${symbol}`;
+	
+	const getName = () => _name;
+	const setName = () => _name = name;
+	const getSymbol = () => symbol;
+	const setComputer = () => _computer = !_computer;
 	const isComputer = () => _computer;
-	const getValue = () => value;
 
-	return {getValue, setComputer, isComputer};
+	return {getName, setName, getSymbol, setComputer, isComputer}
 }
 
-const gameBoard = (function() {
-	let _board = [...new Array(9)];
-	const _players = [player("x"), player("o")];
-	let _currentTurn = 0;
-	let _winner = null;
+const Tile = function(id) {
+	const _tileElement = document.querySelector(`.tile[data="${id}"]`);
+	let _symbol = null;
 
-	return {
-		getTile(tile) {
-			return _board[tile];
-		},
-		setTile(tile, value) {
-			_board[tile] = value;
-		},
-		nextTurn() {
-			_currentTurn += 1;
-			_currentTurn %= 2;
-		},
-		getCurrentPlayer() {
-			return _players[_currentTurn];
-		},
-		getWinner() {
-			return _winner;
-		},
-		setWinner(player = _players[_currentTurn]) {
-			_winner = player;
-		},
-		resetBoard() {
-			_board = [...new Array(9)];
-			_currentTurn = 0;
-			_winner = null;
-			clearBoard();
-		}
+	const getSymbol = () => _symbol;
+	const setSymbol = (symbol) => _symbol = symbol;
+	const getId = () => id;
+	const getTileElement = () => _tileElement;
+
+	return {getSymbol, setSymbol, getId, getTileElement}
+}
+
+const Board = (function() {
+	let _board = [Tile(0), Tile(1), Tile(2), Tile(3), Tile(4), Tile(5), Tile(6), Tile(7), Tile(8)];
+	let _players = [Player("x"), Player("o")];
+	let _currentPlayer = 0;
+	let _score = {"x": 0, "o": 0, "tie": 0};
+
+	const getPlayer = (position) => _players[position];
+	const nextPlayer = () => _currentPlayer = (_currentPlayer + 1) % 2;
+	const getCurrentPlayer = () => _players[_currentPlayer];
+	const getTile = (id) => _board[id];
+	const getBoard = () => _board;
+	const resetBoard = () => {
+		_board = [Tile(0), Tile(1), Tile(2), Tile(3), Tile(4), Tile(5), Tile(6), Tile(7), Tile(8)];
+		_players = [];
 	}
+
+	return {getPlayer, nextPlayer, getCurrentPlayer, getTile, getBoard, resetBoard}
 })();
 
-const scoreBoard = (function() {
-	const _score = {"x": 0, "o": 0, "tie": 0}
-
-	return {
-		addScore(winner) {
-			_score[winner] += 1;
+const Controller = (function () {
+	const _tileEvents = (() => {
+		for (let tile of Board.getBoard()) {
+			tile.getTileElement().addEventListener("click",() => {
+				if (!tile.getSymbol()) {
+					tile.setSymbol(Board.getCurrentPlayer().getSymbol());
+					Board.nextPlayer();
+					_drawBoard();
+				}
+			})
 		}
-	}
-})();
+	})();
 
-const setEvents = (function() {
-	const _tiles = document.querySelectorAll(".tile");
-	_tiles.forEach(function(tile) {
-		tile.addEventListener("click", drawMove);
-	});
-})();
-
-function drawMove(e) {
-	const tile = e.target;
-
-	if (!gameBoard.getTile(tile.getAttribute("data")) && !gameBoard.getWinner()) {
-		const icon = document.createElement("i");
-
-		if (gameBoard.getCurrentPlayer().getValue() === "x") {
-			icon.classList.add("fas");
-			icon.classList.add("fa-times");
-		}
-		else if (gameBoard.getCurrentPlayer().getValue() === "o") {
-			icon.classList.add("far");
-			icon.classList.add("fa-circle");
-		}
-
-		tile.appendChild(icon);
-		gameBoard.setTile(tile.getAttribute("data"), gameBoard.getCurrentPlayer().getValue());
-		
-		const win = checkForWin();
-		if (win) {
-			markWinningTiles(win);
-			if (gameBoard.getWinner()) {
-				scoreBoard.addScore((gameBoard.getWinner().getValue()));
+	const _drawBoard = () => {
+		for (let tile of Board.getBoard()) {
+			if (tile.getTileElement().childElementCount > 0) {
+				tile.getTileElement().removeChild(tile.getTileElement().firstChild);
 			}
-			else {
-				scoreBoard.addScore((gameBoard.getWinner()))
+			if (tile.getSymbol()) {
+				const icon = document.createElement("i");
+				if (tile.getSymbol() === "x") {
+					icon.classList.add("fas");
+					icon.classList.add("fa-times");
+				}
+				else {
+					icon.classList.add("far");
+					icon.classList.add("fa-circle");
+				}
+				tile.getTileElement().appendChild(icon);
 			}
-			setTimeout(gameBoard.resetBoard, 3000);
-		}
-
-		gameBoard.nextTurn();
-	}
-}
-
-function markWinningTiles(tileNumber) {
-	const tiles = tileNumber.map(function(t) {return document.querySelector(`.tile[data="${t}"]`)})
-
-	tiles.forEach(function(tile) {
-		tile.classList.add("win");
-		tile.addEventListener("transitionend", removeMark)});
-}
-
-function removeMark(e) {
-	if (e.propertyName !== "background-color") return;
-	e.target.classList.remove("win");
-}
-
-function checkForWin() {
-	const possibleWins = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 4, 8], [2, 4, 6], [0, 3, 6], [1, 4, 7], [2, 5, 8]];
-
-	for (let possible of possibleWins) {
-		const values = possible.map(function(p) {return gameBoard.getTile(p)});
-		
-		if (values.every(function(v) {return v}) && (values[0] === values[1] && values[0] === values[2])) {
-			gameBoard.setWinner();
-			return possible;
 		}
 	}
-	if ([0, 1, 2, 3, 4, 5, 6, 7, 8]
-		.map(function(t) {return gameBoard.getTile(t)})
-		.every(function(t) {return t})) {
-			return [0, 1, 2, 3, 4, 5, 6, 7, 8]
-		}
-	return false;
-}
-
-function clearBoard() {
-	const tiles = document.querySelectorAll(".tile");
-
-	tiles.forEach(function(tile) {
-		if (tile.firstChild) {
-			tile.removeChild(tile.firstChild);
-		}
-	});
-}
+})();
