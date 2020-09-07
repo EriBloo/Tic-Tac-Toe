@@ -28,6 +28,29 @@ body {
   align-items: center;
 }
 
+.nav .scoreboard input {
+  width: 10vmin;
+  font-family: 'Nunito', sans-serif;
+  font-size: 2vmin;
+  line-height: 3vmin;
+  background-color: #b4b4b4;
+  border: none;
+  margin: 0 2vmin 0 2vmin;
+}
+
+.nav .scoreboard input:focus {
+  outline: none;
+}
+
+.nav .scoreboard .playerx-name {
+  border-bottom: solid 1px #2e2e86;
+  text-align: right;
+}
+
+.nav .scoreboard .playero-name {
+  border-bottom: solid 1px #8f3636;
+}
+
 .nav .scoreboard h2 {
   font-size: 4vmin;
   margin: 0 2rem 0 2rem;
@@ -53,7 +76,7 @@ body {
 
 .nav .computer-toggle h3 {
   text-align: center;
-  font-size: 3vmin;
+  font-size: 2vmin;
 }
 
 .nav .computer-toggle .fa-toggle-off {
@@ -69,7 +92,7 @@ body {
 }
 
 .wrapper {
-  height: 90vh;
+  height: 80vh;
   width: 100vw;
   display: grid;
   place-items: center;
@@ -77,8 +100,8 @@ body {
 
 .wrapper .board {
   background-color: #949494;
-  width: 80vmin;
-  height: 80vmin;
+  width: 60vmin;
+  height: 60vmin;
   padding: 2vmin;
   display: grid;
   grid-template-rows: repeat(3, 1fr);
@@ -112,4 +135,22 @@ body {
 
 .wrapper .board .win {
   background-color: #ecec4b;
+}
+
+.display {
+  height: 10vh;
+  background-color: #b4b4b4;
+  border-top: solid 0.5vh #8f3636;
+  display: grid;
+  place-items: center;
+}
+
+.display h2 {
+  font-size: 6vmin;
+  opacity: 0;
+  transition: all 1s ease;
+}
+
+.display .win-text {
+  opacity: 1;
 }

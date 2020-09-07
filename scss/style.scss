@@ -26,6 +26,29 @@ body {
 		justify-content: center;
 		align-items: center;
 
+		input {
+			width: 10vmin;
+			font-family: 'Nunito', sans-serif;
+			font-size: 2vmin;
+			line-height: 3vmin;
+			background-color: rgb(180, 180, 180);
+			border: none;
+			margin: 0 2vmin 0 2vmin;
+		}
+
+		input:focus {
+			outline: none;
+		}
+
+		.playerx-name {
+			border-bottom: solid 1px rgb(46, 46, 134);
+			text-align: right;
+		}
+
+		.playero-name {
+			border-bottom: solid 1px rgb(143, 54, 54);
+		}
+
 		h2 {
 			font-size: 4vmin;
 			margin: 0 2rem 0 2rem;
@@ -51,7 +74,7 @@ body {
 
 		h3 {
 			text-align: center;
-			font-size: 3vmin;
+			font-size: 2vmin;
 		}
 
 		.fa-toggle-off {
@@ -69,15 +92,15 @@ body {
 }
 
 .wrapper {
-	height: 90vh;
+	height: 80vh;
 	width: 100vw;
 	display: grid;
 	place-items: center;
 
 	.board {
 		background-color: rgb(148, 148, 148);
-		width: 80vmin;
-		height: 80vmin;
+		width: 60vmin;
+		height: 60vmin;
 		padding: 2vmin;
 		display: grid;
 		grid-template-rows: repeat(3, 1fr);
@@ -111,5 +134,23 @@ body {
 		.win {
 			background-color: rgb(236, 236, 75);
 		}
+	}
+}
+
+.display {
+	height: 10vh;
+	background-color: rgb(180, 180, 180);
+	border-top: solid 0.5vh rgb(143, 54, 54);
+	display: grid;
+	place-items: center;
+
+	h2 {
+		font-size: 6vmin;
+		opacity: 0;
+		transition: all 1s ease;
+	}
+
+	.win-text {
+		opacity: 1;
 	}
 }
